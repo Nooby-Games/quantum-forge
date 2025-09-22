@@ -1,0 +1,5 @@
+import React, {createContext, useContext, useEffect} from 'react';
+const AC = createContext(null);
+export default function AudioManager({children}){ useEffect(()=>{ const ctx = new (window.AudioContext||window.webkitAudioContext)(); window.__QF_AUDIO = ctx; return ()=>{ try{ ctx.close(); }catch(e){} }; },[]); return (<AC.Provider value={{play:play}}>{children}</AC.Provider>); }
+export function useAudio(){ return useContext(AC) || {play:()=>{}}; }
+function play(name){ try{ const ctx = window.__QF_AUDIO || new (window.AudioContext||window.webkitAudioContext)(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); if(name==='click'){ o.frequency.value=700; g.gain.value=0.05; } else if(name==='buy'){ o.frequency.value=420; g.gain.value=0.06; } else { o.frequency.value=520; g.gain.value=0.04; } o.start(); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12); setTimeout(()=>{ try{o.stop(); }catch(e){} },200); }catch(e){} }

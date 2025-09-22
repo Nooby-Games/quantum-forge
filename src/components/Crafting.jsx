@@ -1,0 +1,2 @@
+import React from 'react';
+export default function Crafting(){ function craft(){ const key='qf_final_v1'; const raw=localStorage.getItem(key); if(!raw) return alert('Load'); const s=JSON.parse(raw); if((s.ore||0) < 200) return alert('Need 200 ore'); s.ore -= 200; s.shards = (s.shards||0) + 1; localStorage.setItem(key,JSON.stringify(s)); alert('Crafted'); location.reload(); } return (<div className='panel'><h3>Crafting</h3><div style={{fontSize:13}}>Craft shards.</div><div style={{marginTop:8}}><button onClick={craft}>Craft (200 ore)</button></div></div>); }
