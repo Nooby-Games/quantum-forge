@@ -16,16 +16,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4   # ✅ latest
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4 # ✅ latest
         with:
-          node-version: 18
+          node-version: 20
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build project
         run: npm run build
@@ -33,8 +33,8 @@ jobs:
       - name: Add .nojekyll
         run: echo > dist/.nojekyll
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+      - name: Upload build output
+        uses: actions/upload-pages-artifact@v3 # ✅ latest
         with:
           path: ./dist
 
@@ -47,4 +47,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4 # ✅ latest
